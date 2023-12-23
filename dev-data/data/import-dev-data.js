@@ -32,7 +32,7 @@ const reviews = JSON.parse(
 const importData = async () => {
   try {
     await Venue.create(venues);
-    await User.create(users);
+    await User.create(users, { validateBeforeSave: false });
     await Review.create(reviews);
     console.log('Data successfully loaded!');
   } catch (err) {
