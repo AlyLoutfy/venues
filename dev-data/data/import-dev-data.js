@@ -2,12 +2,14 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Venue = require('../../models/venueModel');
+const Review = require('../../models/reviewModel');
+const User = require('../../models/userModel');
 
 dotenv.config({ path: './config.env' });
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
-  process.env.DATABASE_PASSWORD,
+  process.env.DATABASE_PASSWORD
 );
 
 mongoose
@@ -15,19 +17,23 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
   .then(() => console.log('DB connection successful!'));
 
 // READ JSON FILE
-const venues = JSON.parse(
-  fs.readFileSync(`${__dirname}/venues-simple.json`, 'utf-8'),
+const venues = JSON.parse(fs.readFileSync(`${__dirname}/venues.json`, 'utf-8'));
+const users = JSON.parse(fs.readFileSync(`${__dirname}/users.json`, 'utf-8'));
+const reviews = JSON.parse(
+  fs.readFileSync(`${__dirname}/reviews.json`, 'utf-8')
 );
 
 // IMPORT DATA INTO DB
 const importData = async () => {
   try {
     await Venue.create(venues);
+    await User.create(users);
+    await Review.create(reviews);
     console.log('Data successfully loaded!');
   } catch (err) {
     console.log(err);
@@ -39,6 +45,8 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Venue.deleteMany();
+    await User.deleteMany();
+    await Review.deleteMany();
     console.log('Data successfully deleted!');
   } catch (err) {
     console.log(err);
