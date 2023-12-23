@@ -7,22 +7,22 @@ const venueSchema = new mongoose.Schema(
       trim: true,
       required: [true, 'A Venue must have a Name'],
       minlength: [3, 'Venue name must contain more than 3 characters'],
-      maxlength: [30, 'Venue name must contain less than 30 characters']
+      maxlength: [30, 'Venue name must contain less than 30 characters'],
     },
     company: {
       type: String,
-      trim: true
+      trim: true,
     },
     contact: {
       type: String,
-      required: [true, 'A Venue must have a Contact Number']
+      required: [true, 'A Venue must have a Contact Number'],
     },
     minCapacity: {
-      type: Number
+      type: Number,
     },
     maxCapacity: {
       type: Number,
-      required: [true, 'A Venue must have a Maximum Guests Capacity']
+      required: [true, 'A Venue must have a Maximum Guests Capacity'],
     },
     price: {
       type: Number,
@@ -30,8 +30,8 @@ const venueSchema = new mongoose.Schema(
         validator: function () {
           return this.price || this.pricePerGuest;
         },
-        message: 'At least one of Price or Price Per Guest must be specified'
-      }
+        message: 'At least one of Price or Price Per Guest must be specified',
+      },
     },
     pricePerGuest: {
       type: Number,
@@ -39,8 +39,8 @@ const venueSchema = new mongoose.Schema(
         validator: function () {
           return this.price || this.pricePerGuest;
         },
-        message: 'At least one of Price or Price Per Guest must be specified'
-      }
+        message: 'At least one of Price or Price Per Guest must be specified',
+      },
     },
     priceDiscount: {
       type: Number,
@@ -48,48 +48,48 @@ const venueSchema = new mongoose.Schema(
         validator: function (val) {
           return val < this.price;
         },
-        message: 'Discount price ({VALUE}) should be lower than regular price'
-      }
+        message: 'Discount price ({VALUE}) should be lower than regular price',
+      },
     },
     ratingsAverage: {
       type: Number,
       default: 4.5,
       min: [1, 'Rating must be above 1.0'],
-      max: [5, 'Rating must be below 5.0']
+      max: [5, 'Rating must be below 5.0'],
     },
     ratingsQuantity: {
-      type: Number
+      type: Number,
     },
     summary: {
       type: String,
-      trim: true
+      trim: true,
     },
     description: {
       type: String,
-      trim: true
+      trim: true,
     },
     imageCover: {
       type: String,
-      required: [true, 'A Venue must have a cover image']
+      required: [true, 'A Venue must have a cover image'],
     },
     images: [String],
     bookedDates: [Date],
     createdAt: {
       type: Date,
       default: Date.now(),
-      select: false
-    }
+      select: false,
+    },
   },
   {
     toJSON: { virtuals: true },
-    toObject: { virtuals: true }
-  }
+    toObject: { virtuals: true },
+  },
 );
 
 venueSchema.virtual('reviews', {
   ref: 'Review',
   foreignField: 'venue',
-  localField: '_id'
+  localField: '_id',
 });
 
 venueSchema.pre('validate', function (next) {

@@ -5,32 +5,32 @@ const reviewSchema = new mongoose.Schema(
   {
     review: {
       type: String,
-      required: [true, 'Review can not be empty!']
+      required: [true, 'Review can not be empty!'],
     },
     rating: {
       type: Number,
       min: 1,
-      max: 5
+      max: 5,
     },
     createdAt: {
       type: Date,
-      default: Date.now
+      default: Date.now,
     },
     venue: {
       type: mongoose.Schema.ObjectId,
       ref: 'Venue',
-      required: [true, 'Review must belong to a Venue.']
+      required: [true, 'Review must belong to a Venue.'],
     },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-      required: [true, 'Review must belong to a user']
-    }
+      required: [true, 'Review must belong to a user'],
+    },
   },
   {
     toJSON: { virtuals: true },
-    toObject: { virtuals: true }
-  }
+    toObject: { virtuals: true },
+  },
 );
 
 reviewSchema.pre(/^find/, function (next) {
@@ -44,7 +44,7 @@ reviewSchema.pre(/^find/, function (next) {
 
   this.populate({
     path: 'user',
-    select: 'name'
+    select: 'name',
   });
 
   next();

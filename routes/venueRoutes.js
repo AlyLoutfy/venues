@@ -17,7 +17,7 @@ router
   .post(
     authController.protect,
     authController.restrictTo('admin'),
-    venueController.createVenue
+    venueController.createVenue,
   );
 
 router
@@ -26,12 +26,12 @@ router
   .patch(
     authController.protect,
     authController.restrictTo('admin'),
-    venueController.updateVenue
+    venueController.updateVenue,
   )
   .delete(
     authController.protect,
     authController.restrictTo('admin'),
-    venueController.deleteVenue
+    venueController.deleteVenue,
   );
 
 module.exports = router;

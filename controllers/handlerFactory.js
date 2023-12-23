@@ -12,7 +12,7 @@ exports.deleteOne = (Model) =>
 
     res.status(204).json({
       status: 'success',
-      data: null
+      data: null,
     });
   });
 
@@ -20,7 +20,7 @@ exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-      runValidators: true
+      runValidators: true,
     });
 
     if (!doc) {
@@ -30,8 +30,8 @@ exports.updateOne = (Model) =>
     res.status(200).json({
       status: 'success',
       data: {
-        data: doc
-      }
+        data: doc,
+      },
     });
   });
 
@@ -42,8 +42,8 @@ exports.createOne = (Model) =>
     res.status(201).json({
       status: 'success',
       data: {
-        data: doc
-      }
+        data: doc,
+      },
     });
   });
 
@@ -60,8 +60,8 @@ exports.getOne = (Model, popOptions) =>
     res.status(200).json({
       status: 'success',
       data: {
-        data: doc
-      }
+        data: doc,
+      },
     });
   });
 
@@ -84,7 +84,7 @@ exports.getAll = (Model) =>
       status: 'success',
       results: doc.length,
       data: {
-        data: doc
-      }
+        data: doc,
+      },
     });
   });
